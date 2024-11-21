@@ -35,56 +35,6 @@ class BasketExplorer:
             st.error(f"Error fetching last row: {e}")
             return pd.DataFrame()
 
-    # def process_data(self):
-    #     # Fetch basket data
-    #     basket_query = "SELECT * FROM httsbaskets"
-    #     baskets_df = self.fetch_data(basket_query)
-
-    #     if baskets_df.empty:
-    #         st.warning("No basket data found.")
-    #         return
-
-    #     # Fetch the last row from PnL HTTS table
-    #     pnl_df = self.fetch_last_row("pnlhtts")
-    #     if pnl_df.empty:
-    #         st.warning("No PnL data found.")
-    #         return
-
-    #     # Extract VDATE and VTIME for reference
-    #     last_update_date = pnl_df['VDATE'].iloc[0]
-    #     last_update_time = pnl_df['VTIME'].iloc[0]
-
-    #     # Filter active baskets
-    #     active_baskets = baskets_df[(baskets_df['STATUS'] == '1')]
-
-    #     def calculate_pnl(category_baskets):
-    #         if category_baskets.empty:
-    #             return 0
-    #         pnl_columns = [col for col in pnl_df.columns if col in (category_baskets['BASKETNAME']).values]
-    #         if not pnl_columns:
-    #             return 0
-    #         # Ensure values are converted to float and summed
-    #         return pnl_df[pnl_columns].iloc[0].astype(float).sum()
-
-    #     # Segregate by OWNED and CATEGORY
-    #     live_intra = active_baskets[(active_baskets['CATEGORY'] == 'INTRA')]
-    #     live_daily = active_baskets[(active_baskets['CATEGORY'] == 'DAILY')]
-    #     paper_baskets = active_baskets[active_baskets['OWNED'] == 'PAPER']
-
-    #     # Calculate PnL
-    #     pnl_live_intra = calculate_pnl(live_intra)
-    #     pnl_live_daily = calculate_pnl(live_daily)
-    #     pnl_total = pnl_live_intra + pnl_live_daily
-    #     pnl_paper = calculate_pnl(paper_baskets)
-
-    #     return {
-    #         "Live Intra": pnl_live_intra,
-    #         "Live Daily": pnl_live_daily,
-    #         "Total Live PnL": pnl_total,
-    #         "Paper": pnl_paper,
-    #         "Last Update": f"{last_update_date} {last_update_time}"
-    #     }
-
     def process_data(self):
         # Fetch basket data
         basket_query = "SELECT * FROM httsbaskets"
@@ -164,7 +114,6 @@ class BasketExplorer:
             "PAPER Baskets": paper_df
         }
 
-
 def main():
     st.set_page_config(
         page_title="HTTS Live PnL", 
@@ -215,12 +164,11 @@ def main():
             st.query_params["refresh"] = "true"
         st.divider()
 
-
         # Display the details for each category (INTRA, DAILY, PAPER)
         # Create 3 columns for displaying the baskets side by side
         col1, col2, col3 = st.columns(3)
         with col1:
-            st.subheader("INTRA Baskets PnL")
+            st.subheader("INTRA Baskets")
             intra_df = results['INTRA Baskets']
             if not intra_df.empty:
                 intra_df_sorted = intra_df.sort_values(by='PnL', ascending=False).drop(columns=['Category']).reset_index(drop=True)
@@ -229,7 +177,7 @@ def main():
                 st.write("No INTRA baskets available.")
 
         with col2:
-            st.subheader("DAILY Baskets PnL")
+            st.subheader("DAILY Baskets")
             daily_df =  results['DAILY Baskets']
             if not daily_df.empty:
                 daily_df_sorted = daily_df.sort_values(by='PnL', ascending=False).drop(columns=['Category']).reset_index(drop=True)
@@ -237,14 +185,13 @@ def main():
             else:
                 st.write("No DAILY baskets available.")
         with col3:
-            st.subheader("PAPER Baskets PnL")
+            st.subheader("PAPER Baskets")
             paper_df = results['PAPER Baskets']
             if not paper_df.empty:
                 paper_df_sorted = paper_df.sort_values(by='PnL', ascending=False).drop(columns=['Category']).reset_index(drop=True)
                 st.dataframe(paper_df_sorted, hide_index=True)
             else:
                 st.write("No PAPER baskets available.")
-
 
 if __name__ == "__main__":
     main()
