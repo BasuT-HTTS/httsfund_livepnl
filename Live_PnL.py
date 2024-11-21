@@ -172,7 +172,7 @@ def main():
             intra_df = results['INTRA Baskets']
             if not intra_df.empty:
                 intra_df_sorted = intra_df.sort_values(by='PnL', ascending=False).drop(columns=['Category']).reset_index(drop=True)
-                intra_df_sorted['PnL'] = intra_df_sorted['PnL'].astype(int)
+                intra_df_sorted['PnL'] = intra_df_sorted['PnL'].astype(int).apply(lambda x: f"{x:.0f}")
                 st.dataframe(intra_df_sorted, hide_index=True)
             else:
                 st.write("No INTRA baskets available.")
@@ -182,7 +182,7 @@ def main():
             daily_df =  results['DAILY Baskets']
             if not daily_df.empty:
                 daily_df_sorted = daily_df.sort_values(by='PnL', ascending=False).drop(columns=['Category']).reset_index(drop=True)
-                daily_df_sorted['PnL'] = daily_df_sorted['PnL'].astype(int)
+                daily_df_sorted['PnL'] = daily_df_sorted['PnL'].astype(int).apply(lambda x: f"{x:.0f}")
                 st.dataframe(daily_df_sorted, hide_index=True)
             else:
                 st.write("No DAILY baskets available.")
@@ -191,7 +191,7 @@ def main():
             paper_df = results['PAPER Baskets']
             if not paper_df.empty:
                 paper_df_sorted = paper_df.sort_values(by='PnL', ascending=False).drop(columns=['Category']).reset_index(drop=True)
-                paper_df_sorted['PnL'] = paper_df_sorted['PnL'].astype(int)
+                paper_df_sorted['PnL'] = paper_df_sorted['PnL'].astype(int).apply(lambda x: f"{x:.0f}")
                 st.dataframe(paper_df_sorted, hide_index=True)
             else:
                 st.write("No PAPER baskets available.")
