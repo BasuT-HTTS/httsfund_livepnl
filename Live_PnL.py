@@ -164,6 +164,11 @@ def main():
             st.query_params["refresh"] = "true"
         st.divider()
 
+        # Define styling function
+        def style_dataframe(val):
+            color = "green" if val > 0 else "red" if val < 0 else "black"
+            return f"color: {color}; font-weight: bold"
+        
         # Display the details for each category (INTRA, DAILY, PAPER)
         # Create 3 columns for displaying the baskets side by side
         col1, col2, col3 = st.columns(3)
@@ -173,6 +178,8 @@ def main():
             if not intra_df.empty:
                 intra_df_sorted = intra_df.sort_values(by='PnL', ascending=False).drop(columns=['Category']).reset_index(drop=True)
                 intra_df_sorted['PnL'] = intra_df_sorted['PnL'].astype(int).apply(lambda x: f"{x:.0f}")
+                intra_df_sorted = intra_df_sorted.style.applymap(style_dataframe, subset=['Profit/Loss'])
+
                 st.dataframe(intra_df_sorted, hide_index=True)
             else:
                 st.write("No INTRA baskets available.")
