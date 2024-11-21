@@ -146,16 +146,16 @@ def main():
             return f'<span style="color:{color}; font-size:24px; font-weight:bold;">{value:.2f}</span>'
 
         with col1:
-            st.metric("📊 Total HTTS PnL", f"{results['Total Live PnL']:.2f}")
+            st.metric("📊 Total HTTS PnL", f"{int(results['Total Live PnL'])}")
 
         with col2:
-            st.metric("📊 HTTS INTRA PnL", f"{results['Live Intra']:.2f}")
+            st.metric("📊 HTTS INTRA PnL", f"{int(results['Live Intra'])}")
 
         with col3:
-            st.metric("📊 HTTS DAILY PnL", f"{results['Live Daily']:.2f}")
+            st.metric("📊 HTTS DAILY PnL", f"{int(results['Live Daily'])}")
 
         # with col1:
-            st.metric("📊 HTTS PAPER PnL", f"{results['Paper']:.2f}")
+            st.metric("📊 HTTS PAPER PnL", f"{int(results['Paper'])}")
 
         st.divider()
         st.markdown(f"**Last Updated:** {last_update_str}")
@@ -172,6 +172,7 @@ def main():
             intra_df = results['INTRA Baskets']
             if not intra_df.empty:
                 intra_df_sorted = intra_df.sort_values(by='PnL', ascending=False).drop(columns=['Category']).reset_index(drop=True)
+                intra_df_sorted['PnL'] = intra_df_sorted['PnL'].astype(int)
                 st.dataframe(intra_df_sorted, hide_index=True)
             else:
                 st.write("No INTRA baskets available.")
@@ -181,6 +182,7 @@ def main():
             daily_df =  results['DAILY Baskets']
             if not daily_df.empty:
                 daily_df_sorted = daily_df.sort_values(by='PnL', ascending=False).drop(columns=['Category']).reset_index(drop=True)
+                daily_df_sorted['PnL'] = daily_df_sorted['PnL'].astype(int)
                 st.dataframe(daily_df_sorted, hide_index=True)
             else:
                 st.write("No DAILY baskets available.")
@@ -189,6 +191,7 @@ def main():
             paper_df = results['PAPER Baskets']
             if not paper_df.empty:
                 paper_df_sorted = paper_df.sort_values(by='PnL', ascending=False).drop(columns=['Category']).reset_index(drop=True)
+                paper_df_sorted['PnL'] = paper_df_sorted['PnL'].astype(int)
                 st.dataframe(paper_df_sorted, hide_index=True)
             else:
                 st.write("No PAPER baskets available.")
