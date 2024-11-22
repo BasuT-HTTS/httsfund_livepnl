@@ -122,15 +122,15 @@ def main():
     )
 
     # Database connection details
-    host = "162.251.85.8"
-    username = "httsfive_pnluser"
-    password = "@shana99P"
-    database = "httsfive_pnl"
+    # host = "162.251.85.8"
+    # username = "httsfive_pnluser"
+    # password = "@shana99P"
+    # database = "httsfive_pnl"
 
-    # host = st.secrets["credentials"]["DB_HOST"]
-    # username = st.secrets["credentials"]["DB_USERNAME"]
-    # password = st.secrets["credentials"]["DB_PASSWORD"]
-    # database = st.secrets["credentials"]["DB_DATABASE"]
+    host = st.secrets["credentials"]["DB_HOST"]
+    username = st.secrets["credentials"]["DB_USERNAME"]
+    password = st.secrets["credentials"]["DB_PASSWORD"]
+    database = st.secrets["credentials"]["DB_DATABASE"]
 
 
     # Initialize BasketExplorer
