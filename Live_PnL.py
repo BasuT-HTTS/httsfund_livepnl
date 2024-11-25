@@ -62,7 +62,8 @@ class BasketExplorer:
             if not pnl_columns:
                 return 0
             # Ensure values are converted to float and summed
-            return pnl_df[pnl_columns].iloc[0].astype(float).sum()
+            # return pnl_df[pnl_columns].iloc[0].astype(float).sum()
+            return pd.to_numeric(pnl_df[pnl_columns].iloc[0], errors='coerce').fillna(0).sum()
 
         # Segregate by OWNED and CATEGORY
         live_intra = active_baskets[(active_baskets['CATEGORY'] == 'INTRA')]
