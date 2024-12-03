@@ -174,7 +174,8 @@ def main():
             if not intra_df.empty:
                 intra_df_sorted = intra_df.sort_values(by='PnL', ascending=False).drop(columns=['Category']).reset_index(drop=True)
                 intra_df_sorted['PnL'] = intra_df_sorted['PnL'].astype(int).apply(lambda x: f"{x:.0f}")
-                st.dataframe(intra_df_sorted, hide_index=True)
+                # st.dataframe(intra_df_sorted, hide_index=True)
+                st.write(intra_df_sorted)
             else:
                 st.write("No INTRA baskets available.")
 
