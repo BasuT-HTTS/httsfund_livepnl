@@ -108,7 +108,11 @@ class BasketExplorer:
             "Live Intra": intra_df["PnL"].sum() if not intra_df.empty else 0,
             "Live Daily": daily_df["PnL"].sum() if not daily_df.empty else 0,
             # "Total Live PnL": (intra_df["PnL"].sum() + daily_df["PnL"].sum()) if not intra_df.empty or not daily_df.empty else 0,
-            "Total Live PnL": (intra_df["PnL"].sum() + daily_df["PnL"].sum()) if not intra_df.empty and not daily_df.empty else 0,
+            # "Total Live PnL": (intra_df["PnL"].sum() + daily_df["PnL"].sum()) if not intra_df.empty and not daily_df.empty else 0,
+            "Total Live PnL": (
+                (intra_df["PnL"].sum() if "PnL" in intra_df.columns else 0) + 
+                (daily_df["PnL"].sum() if "PnL" in daily_df.columns else 0)
+            ) if not intra_df.empty and not daily_df.empty else 0,
             "Paper": paper_df["PnL"].sum() if not paper_df.empty else 0,
             "Last Update": f"{last_update_date} {last_update_time}",
             "INTRA Baskets": intra_df,
