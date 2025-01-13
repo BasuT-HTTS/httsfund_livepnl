@@ -155,30 +155,30 @@ def main():
             color = "green" if value > 0 else "red" if value < 0 else "black"
             return f'<span style="color:{color}; font-size:24px; font-weight:bold;">{value:.2f}</span>'
 
-        # with col1:
-        #     st.metric("📊 Total HTTS PnL", f"{int(results['Total Live PnL'])}")
-
-        # with col2:
-        #     st.metric("📊 HTTS INTRA PnL", f"{int(results['Live Intra'])}")
-
-        # with col3:
-        #     st.metric("📊 HTTS DAILY PnL", f"{int(results['Live Daily'])}")
-
-        # # with col1:
-        #     st.metric("📊 HTTS PAPER PnL", f"{int(results['Paper'])}")
-
-        # Display the PnL metrics with color formatting
         with col1:
-            st.markdown(f"📊 Total HTTS PnL: {format_pnl(results['Total Live PnL'])}", unsafe_allow_html=True)
+            st.metric("📊 Total HTTS PnL", f"{int(results['Total Live PnL'])}")
 
         with col2:
-            st.markdown(f"📊 HTTS INTRA PnL: {format_pnl(results['Live Intra'])}", unsafe_allow_html=True)
+            st.metric("📊 HTTS INTRA PnL", f"{int(results['Live Intra'])}")
 
         with col3:
-            st.markdown(f"📊 HTTS DAILY PnL: {format_pnl(results['Live Daily'])}", unsafe_allow_html=True)
+            st.metric("📊 HTTS DAILY PnL", f"{int(results['Live Daily'])}")
 
-        with col1:
-            st.markdown(f"📊 HTTS PAPER PnL: {format_pnl(results['Paper'])}", unsafe_allow_html=True)
+        # with col1:
+            st.metric("📊 HTTS PAPER PnL", f"{int(results['Paper'])}")
+
+        # # Display the PnL metrics with color formatting
+        # with col1:
+        #     st.markdown(f"📊 Total HTTS PnL: {format_pnl(results['Total Live PnL'])}", unsafe_allow_html=True)
+
+        # with col2:
+        #     st.markdown(f"📊 HTTS INTRA PnL: {format_pnl(results['Live Intra'])}", unsafe_allow_html=True)
+
+        # with col3:
+        #     st.markdown(f"📊 HTTS DAILY PnL: {format_pnl(results['Live Daily'])}", unsafe_allow_html=True)
+
+        # with col1:
+        #     st.markdown(f"📊 HTTS PAPER PnL: {format_pnl(results['Paper'])}", unsafe_allow_html=True)
 
 
         st.divider()
