@@ -35,6 +35,10 @@ class BasketExplorer:
             st.error(f"Error fetching last row: {e}")
             return pd.DataFrame()
 
+    def format_pnl(value):
+        color = "green" if value > 0 else "red" if value < 0 else "black"
+        return f'<span style="color:{color}; font-size:24px; font-weight:bold;">{value:.2f}</span>'
+
     def process_data(self):
         # Fetch basket data
         basket_query = "SELECT * FROM httsbaskets"
@@ -151,17 +155,31 @@ def main():
             color = "green" if value > 0 else "red" if value < 0 else "black"
             return f'<span style="color:{color}; font-size:24px; font-weight:bold;">{value:.2f}</span>'
 
+        # with col1:
+        #     st.metric("📊 Total HTTS PnL", f"{int(results['Total Live PnL'])}")
+
+        # with col2:
+        #     st.metric("📊 HTTS INTRA PnL", f"{int(results['Live Intra'])}")
+
+        # with col3:
+        #     st.metric("📊 HTTS DAILY PnL", f"{int(results['Live Daily'])}")
+
+        # # with col1:
+        #     st.metric("📊 HTTS PAPER PnL", f"{int(results['Paper'])}")
+
+        # Display the PnL metrics with color formatting
         with col1:
-            st.metric("📊 Total HTTS PnL", f"{int(results['Total Live PnL'])}")
+            st.markdown(f"📊 Total HTTS PnL: {format_pnl(results['Total Live PnL'])}", unsafe_allow_html=True)
 
         with col2:
-            st.metric("📊 HTTS INTRA PnL", f"{int(results['Live Intra'])}")
+            st.markdown(f"📊 HTTS INTRA PnL: {format_pnl(results['Live Intra'])}", unsafe_allow_html=True)
 
         with col3:
-            st.metric("📊 HTTS DAILY PnL", f"{int(results['Live Daily'])}")
+            st.markdown(f"📊 HTTS DAILY PnL: {format_pnl(results['Live Daily'])}", unsafe_allow_html=True)
 
-        # with col1:
-            st.metric("📊 HTTS PAPER PnL", f"{int(results['Paper'])}")
+        with col1:
+            st.markdown(f"📊 HTTS PAPER PnL: {format_pnl(results['Paper'])}", unsafe_allow_html=True)
+
 
         st.divider()
         st.markdown(f"**Last Updated:** {last_update_str}")
