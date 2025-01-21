@@ -19,13 +19,28 @@ class BasketExplorer:
             st.error(f"Database Connection Error: {e}")
             return None
 
+    # def fetch_data(self, query):
+    #     try:
+    #         if self.conn:
+    #             return pd.read_sql(query, self.conn)
+    #     except mysql.connector.Error as e:
+    #         st.error(f"Error executing query: {e}")
+    #         return pd.DataFrame()
+
     def fetch_data(self, query):
         try:
             if self.conn:
-                return pd.read_sql(query, self.conn)
-        except mysql.connector.Error as e:
+                df = pd.read_sql(query, self.conn)
+                if df.empty:
+                    st.warning("Query returned no results.")
+                return df
+            else:
+                st.error("Database connection is not available.")
+                return None
+        except Exception as e:
             st.error(f"Error executing query: {e}")
-            return pd.DataFrame()
+            return None
+
 
     def fetch_last_row(self, table_name):
         try:
